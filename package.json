@@ -1,0 +1,28 @@
+{
+  "name": "xtiv",
+  "version": "1.0.0",
+  "description": "Hacktiv8 Social Media",
+  "author": "Xtiv Team",
+  "license": "ISC",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "pg": "^8.11.5",
+    "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "sequelize-cli": "^6.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akmalhisyammm/xtiv"
+  },
+  "bugs": {
+    "url": "https://github.com/akmalhisyammm/xtiv/issues"
+  }
+}
