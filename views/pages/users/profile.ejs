@@ -1,5 +1,27 @@
 <%- include('../../partials/header', { title: 'User Profile' }) %>
 
-<h1>User Profile</h1>
+<h1><%= profile.fullName %></h1>
+<p><%= profile.gender %></p>
+<p><%= profile.dateOfBirth %></p>
+<p><%= profile.phone %></p>
+<p><%= profile.address %></p>
+
+<a href="/users/update/<%= profile.User.id %>">
+  Update Profile
+</a>
+
+<% profile.User.Posts.forEach((post) => { %>
+<div style="border: 1px solid black; padding: 8px;">
+  <h3><%= post.title %></h3>
+  <p><%= post.content %></p>
+  <p>Created at: <%= post.createdAt %></p>
+  <% post.Tags.forEach((tag) => { %>
+  <p><%= tag.name %></p>
+  <% }) %>
+  <a href="/posts/delete/<%= post.id %>">
+    Delete
+  </a>
+</div>
+<% }) %>
 
 <%- include('../../partials/footer') %>

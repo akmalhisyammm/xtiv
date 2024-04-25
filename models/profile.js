@@ -4,6 +4,10 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Profile extends Model {
+    get fullName() {
+      return `${this.firstName} ${this.lastName}`;
+    }
+    
     static associate(models) {
       this.belongsTo(models.User);
     }
@@ -55,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       phone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
       address: {
         type: DataTypes.STRING,

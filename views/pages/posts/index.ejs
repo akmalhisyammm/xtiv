@@ -6,4 +6,16 @@
   Create Post
 </a>
 
+<% posts.forEach((post) => { %>
+<div style="border: 1px solid black; padding: 8px;">
+  <h3><%= post.title %></h3>
+  <p><%= post.content %></p>
+  <p>Author: <%= post.User.Profile.fullName %></p>
+  <% post.Tags.forEach((tag) => { %>
+  <p><%= tag.name %></p>
+  <% }) %>
+  <p>Created at: <%= post.createdAt %></p>
+</div>
+<% }) %>
+
 <%- include('../../partials/footer') %>

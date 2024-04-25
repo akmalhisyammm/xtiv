@@ -1,14 +1,9 @@
-const { Post, Tag, User } = require('../models');
+const { Post, PostTag, Profile, Tag, User } = require('../models');
 
 class PostController {
   static async renderPosts(req, res) {
     try {
-      const posts = await Post.findAll({ 
-        include: [
-          { model: User },
-          { model: Tag },
-        ] 
-      });
+      const posts = await Post.getPostsByTagWithSort(req.query.tag || '', req.query.sort || 'DESC');
 
       res.render('pages/posts', { posts, user: req.session.user });
     } catch (error) {
@@ -44,14 +39,7 @@ class PostController {
     try {
       const { title, content, imgUrl, TagId } = req.body;
 
-      const post = await Post.create({ 
-        title, 
-        content, 
-        imgUrl, 
-        UserId: req.session.user.id 
-      }, { 
-        include: Tag 
-      });
+      const post = await Post.create({ title, content, imgUrl, UserId: req.session.user.id });
 
       await post.addTags(TagId);
 
@@ -64,7 +52,20 @@ class PostController {
 
   static async handleUpdatePost(req, res) {
     try {
-      res.send('handleUpdatePost');
+      const { title, content, imgUrl, TagId } = req.body;
+
+      const post = await Post.update(
+        { title, content, imgUrl, UserId: req.session.user.id }, 
+        { 
+          where: {
+            id: req.params.id
+          } 
+        }
+      );
+
+      await post.setTags(TagId);
+
+      res.redirect('/posts');
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -73,9 +74,10 @@ class PostController {
 
   static async handleDeletePost(req, res) {
     try {
+      await PostTag.destroy({ where: { PostId: +req.params.id } });
       await Post.destroy({ where: { id: +req.params.id } });
 
-      res.redirect('/posts');
+      res.redirect(`/users/${req.session.user.id}`);
     } catch (error) {
       console.log(error);
       res.send(error.message);

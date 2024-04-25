@@ -8,6 +8,24 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.User);
       this.belongsToMany(models.Tag, { through: models.PostTag });
     }
+
+    static async getPostsByTagWithSort(tag, sort) {
+      const posts = await this.findAll({
+        include: [
+          {
+            model: sequelize.models.Tag,
+            where: tag ? { name: tag } : {},
+          },
+          { 
+            model: sequelize.models.User, 
+            include: sequelize.models.Profile,
+          },
+        ],
+        order: [['createdAt', sort]],
+      });
+
+      return posts;
+    }
   }
 
   Post.init(

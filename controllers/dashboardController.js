@@ -1,7 +1,15 @@
+const { col, fn } = require('sequelize');
+const { Post, Profile, Tag, User } = require('../models');
+
 class DashboardController {
   static async renderDashboard(req, res) {
     try {
-      res.render('pages/dashboard', { user: req.session.user });
+      const genderReports = await Profile.findAll({
+        attributes: ['gender', [fn('COUNT', col('gender')), 'totalGender']],
+        group: 'gender',
+      });
+
+      res.render('dashboard/renderDashboard', { genderReports, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -10,8 +18,9 @@ class DashboardController {
 
   static async renderUsers(req, res) {
     try {
-      // res.send('renderUsers');
-      res.render('dashboard/renderUsers')
+      const users = await User.findAll();
+
+      res.render('dashboard/renderUsers', { users, user: req.session.user })
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -20,8 +29,9 @@ class DashboardController {
 
   static async renderPosts(req, res) {
     try {
-      // res.send('renderPosts');
-      res.render('dashboard/renderPosts')
+      const posts = await Post.findAll();
+
+      res.render('dashboard/renderPosts', { posts, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -30,8 +40,9 @@ class DashboardController {
 
   static async renderTags(req, res) {
     try {
-      // res.send('renderTags');
-      res.render('dashboard/renderTags')
+      const tags = await Tag.findAll();
+
+      res.render('dashboard/renderTags', { tags, user: req.session.user })
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -40,7 +51,6 @@ class DashboardController {
 
   static async renderCreateTag(req, res) {
     try {
-      // res.send('renderCreateTag');
       res.render('dashboard/renderCreateTag')
     } catch (error) {
       console.log(error);

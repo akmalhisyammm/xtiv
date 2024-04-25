@@ -2,6 +2,10 @@
 
 <h1>Login</h1>
 
+<% if (message) { %>
+<p style="color: red;"><%= message %></p>
+<% } %>
+
 <form action="/login" method="post">
   <input type="email" name="email" placeholder="email">
   <input type="password" name="password" placeholder="password">

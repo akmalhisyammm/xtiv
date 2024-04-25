@@ -4,8 +4,6 @@ const AuthMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-// router.use(AuthMiddleware.isUnauthenticated);
-
 router.get('/', AuthMiddleware.isUnauthenticated, AuthController.renderHome);
 
 router.get('/register', AuthMiddleware.isUnauthenticated, AuthController.renderRegister);

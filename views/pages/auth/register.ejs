@@ -2,6 +2,12 @@
 
 <h1>Register</h1>
 
+<% if (messages.length) { %>
+<% messages.forEach((message) => { %>
+<p style="color: red;"><%= message %></p>
+<% }) %>
+<% } %>
+
 <form action="/register" method="post">
   <input type="text" name="firstName" placeholder="firstName">
   <input type="text" name="lastName" placeholder="lastName">
