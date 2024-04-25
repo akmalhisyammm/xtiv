@@ -1,22 +1,57 @@
-<%- include('../../partials/header', { title: 'Login' }) %>
+<%- include('../../partials/header', { title: 'Update Profile' }) %>
 
-<h1>Create Post</h1>
+<form action="/users/update/<%= profile.User.id %>" method="post" class="flex flex-col gap-4 my-4">
+  <div>
+    <label for="firstName" class="block text-sm font-medium mb-2">First Name</label>
+    <input type="text" name="firstName" id="firstName" value="<%= profile.firstName %>" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+  </div>
 
-<form action="/users/update/<%= profile.User.id %>" method="post">
-  <input type="text" name="firstName" value="<%= profile.firstName %>" placeholder="FirstName">
-  <input type="text" name="lastName" value="<%= profile.lastName %>" placeholder="LastName">
   <div>
-    <input type="radio" name="gender" value="male" <%= profile.gender === 'male' && 'checked' %>>
-    <label for="">Male</label>
+    <label for="lastName" class="block text-sm font-medium mb-2">Last Name</label>
+    <input type="text" name="lastName" id="lastName" value="<%= profile.lastName %>" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
   </div>
+
   <div>
-    <input type="radio" name="gender" value="female" <%= profile.gender === 'female' && 'checked' %>>
-    <label for="">Female</label>
+    <label for="gender" class="block text-sm font-medium mb-2">Gender</label>
+    <div class="flex gap-x-6">
+      <div class="flex">
+        <input type="radio" name="gender" id="gender-male" value="male" <%= profile.gender === 'male' && 'checked' %> class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+        <label for="gender-male" class="text-sm ms-2">
+          Male
+        </label>
+      </div>
+      <div class="flex">
+        <input type="radio" name="gender" id="gender-female" value="female" <%= profile.gender === 'female' && 'checked' %> class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+        <label for="gender-female" class="text-sm ms-2">
+          Female
+        </label>
+      </div>
+    </div>
   </div>
-  <input type="date" name="dateOfBirth" value="<%= profile.dateOfBirth.toISOString().split('T')[0] %>" placeholder="DateOfBirth">
-  <input type="text" name="phone" value="<%= profile.phone %>" placeholder="Phone">
-  <input type="text" name="address" value="<%= profile.address %>" placeholder="Address">
-  <button type="submit">Update</button>
+
+  <div>
+    <label for="dateOfBirth" class="block text-sm font-medium mb-2">Date Of Birth</label>
+    <input type="date" name="dateOfBirth" id="dateOfBirth" value="<%= profile.dateOfBirth.toISOString().split('T')[0] %>" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+  </div>
+
+  <div>
+    <label for="phone" class="block text-sm font-medium mb-2">Phone</label>
+    <input type="text" name="phone" id="phone" value="<%= profile.phone %>" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+  </div>
+
+  <div>
+    <label for="address" class="block text-sm font-medium mb-2">Address</label>
+    <input type="text" name="address" id="address" value="<%= profile.address %>" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
+  </div>
+
+  <div class="flex gap-2">
+    <button type="submit" class="py-3 px-4 w-full inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-yellow-500 text-white hover:bg-yellow-600 disabled:opacity-50 disabled:pointer-events-none">
+      Update
+    </button>
+    <a href="/posts" type="button" class="py-3 px-4 w-full inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600 disabled:opacity-50 disabled:pointer-events-none">
+      Cancel
+    </a>
+  </div>
 </form>
 
 <%- include('../../partials/footer') %>

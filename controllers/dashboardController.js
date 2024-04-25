@@ -69,7 +69,9 @@ class DashboardController {
 
   static async handleCreateTag(req, res) {
     try {
-      res.send('handleCreateTag');
+      await Tag.create(req.body);
+
+      res.redirect('/dashboard/tags');
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -105,7 +107,9 @@ class DashboardController {
 
   static async handleDeleteTag(req, res) {
     try {
-      res.send('handleDeleteTag');
+      await Tag.destroy({ where: { id: req.params.id } });
+
+      res.redirect('/dashboard/tags');
     } catch (error) {
       console.log(error);
       res.send(error.message);

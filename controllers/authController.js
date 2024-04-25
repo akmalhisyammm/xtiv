@@ -4,7 +4,8 @@ const { Profile, User, sequelize } = require('../models');
 class AuthController {
   static async renderHome(req, res) {
     try {
-      res.render('pages/auth', { user: req.session.user });
+      // res.render('pages/auth', { user: req.session.user });
+      res.render('pages/renderHome', { user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -15,7 +16,8 @@ class AuthController {
     try {
       const messages = req.query.message?.split(',') || [];
 
-      res.render('pages/auth/register', { messages, user: req.session.user });
+      // res.render('pages/auth/register', { messages, user: req.session.user });
+      res.render('pages/renderRegister', { messages, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -26,7 +28,8 @@ class AuthController {
     try {
       const message = req.query.message || '';
 
-      res.render('pages/auth/login', { message, user: req.session.user });
+      // res.render('pages/auth/login', { message, user: req.session.user });
+      res.render('pages/renderLogin', { message, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);

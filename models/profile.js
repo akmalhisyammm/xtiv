@@ -1,11 +1,16 @@
 'use strict';
 
 const { Model } = require('sequelize');
+const { dateToLocaleString } = require('../helpers/dateFormat');
 
 module.exports = (sequelize, DataTypes) => {
   class Profile extends Model {
     get fullName() {
       return `${this.firstName} ${this.lastName}`;
+    }
+
+    get localeDateOfBirth() {
+      return dateToLocaleString(this.dateOfBirth);
     }
     
     static associate(models) {

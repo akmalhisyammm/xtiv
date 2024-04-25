@@ -4,8 +4,9 @@ class PostController {
   static async renderPosts(req, res) {
     try {
       const posts = await Post.getPostsByTagWithSort(req.query.tag || '', req.query.sort || 'DESC');
+      const tags = await Tag.findAll();
 
-      res.render('pages/posts', { posts, user: req.session.user });
+      res.render('pages/posts', { posts, tags, currentTag: req.query.tag, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
