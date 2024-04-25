@@ -1,31 +1,75 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Profile extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
-
-      this.belongsTo(models.User)
+      this.belongsTo(models.User);
     }
   }
-  Profile.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    gender: DataTypes.ENUM('male', 'female'),
-    dateOfBirth: DataTypes.DATE,
-    phone: DataTypes.INTEGER,
-    address: DataTypes.STRING,
-    UserId : DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Profile',
-  });
+
+  Profile.init(
+    {
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'First name is required',
+          },
+          notEmpty: {
+            msg: 'First name is required',
+          },
+        },
+      },
+      lastName: {
+        type: DataTypes.STRING,
+      },
+      gender: {
+        type: DataTypes.ENUM('male', 'female'),
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Gender is required',
+          },
+          notEmpty: {
+            msg: 'Gender is required',
+          },
+        },
+      },
+      dateOfBirth: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Date of birth is required',
+          },
+          notEmpty: {
+            msg: 'Date of birth is required',
+          },
+          isBefore: {
+            args: `${new Date().getFullYear() - 12}-${new Date().getMonth() + 1}-${new Date().getDate()}`,
+            msg: 'Your age must be at least 12 years old',
+          },
+        },
+      },
+      phone: {
+        type: DataTypes.INTEGER,
+      },
+      address: {
+        type: DataTypes.STRING,
+      },
+      UserId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Profile',
+    }
+  );
+
   return Profile;
 };
