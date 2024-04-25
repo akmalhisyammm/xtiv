@@ -12,8 +12,22 @@ module.exports = (sequelize, DataTypes) => {
 
   PostTag.init(
     {
-      PostId: DataTypes.INTEGER,
-      TagId: DataTypes.INTEGER,
+      PostId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      TagId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Tag is required',
+          },
+          notEmpty: {
+            msg: 'Tag is required',
+          },
+        },
+      },
     },
     {
       sequelize,

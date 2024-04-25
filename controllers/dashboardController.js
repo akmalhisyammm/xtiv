@@ -1,7 +1,7 @@
 class DashboardController {
   static async renderDashboard(req, res) {
     try {
-      res.send('renderDashboard');
+      res.render('pages/dashboard', { user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);

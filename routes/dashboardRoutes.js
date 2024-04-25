@@ -1,7 +1,11 @@
 const express = require('express');
 const DashboardController = require('../controllers/dashboardController');
+const AuthMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
+
+router.use(AuthMiddleware.isAuthenticated);
+router.use(AuthMiddleware.isRoleAdmin);
 
 router.get('/', DashboardController.renderDashboard);
 

@@ -1,16 +1,11 @@
-class UserController {
-  static async renderUsers(req, res) {
-    try {
-      res.send('renderUsers');
-    } catch (error) {
-      console.log(error);
-      res.send(error.message);
-    }
-  }
+const { Profile } = require('../models');
 
+class UserController {
   static async renderUser(req, res) {
     try {
-      res.send('renderUser');
+      const profile = await Profile.findByPk(+req.params.id);
+
+      res.render('pages/users/profile', { profile, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -19,7 +14,9 @@ class UserController {
 
   static async renderUpdateUser(req, res) {
     try {
-      res.send('renderUpdateUser');
+      const profile = await Profile.findByPk(+req.params.id);
+
+      res.render('pages/users/update', { profile, user: req.session.user })
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -28,7 +25,9 @@ class UserController {
 
   static async handleUpdateUser(req, res) {
     try {
-      res.send('handleUpdateUser');
+      console.log(req.body);
+
+      res.redirect(`/users/${req.params.id}`);
     } catch (error) {
       console.log(error);
       res.send(error.message);

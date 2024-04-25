@@ -1,0 +1,18 @@
+<%- include('../../partials/header', { title: 'Login' }) %>
+
+<h1>Create Post</h1>
+
+<form action="/posts/create" method="post">
+  <input type="text" name="title" placeholder="Title">
+  <textarea name="content" id="content" cols="30" rows="10"></textarea>
+  <input type="text" name="imgUrl" placeholder="ImgUrl">
+  <select name="TagId" id="TagId" multiple>
+    <option value="" selected disabled>Choose...</option>
+    <% tags.forEach((tag) => { %>
+    <option value="<%= tag.id %>"><%= tag.name %></option>
+    <% }) %>
+  </select>
+  <button type="submit">Create</button>
+</form>
+
+<%- include('../../partials/footer') %>
