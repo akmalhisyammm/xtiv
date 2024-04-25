@@ -2,6 +2,7 @@ class AuthController {
   static async renderHome(req, res) {
     try {
       res.send('renderHome');
+      
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -19,7 +20,8 @@ class AuthController {
 
   static async renderLogin(req, res) {
     try {
-      res.send('renderLogin');
+      // res.send('renderLogin');
+      res.render('renderLogin')
     } catch (error) {
       console.log(error);
       res.send(error.message);
