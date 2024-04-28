@@ -1,0 +1,33 @@
+<%- include('../../partials/navbar', { title: 'Login' }) %>
+
+<div class="flex min-h-screen items-center justify-center bg-white dark:bg-white-950 p-12" style="background-image: url('https://cdn.pixabay.com/photo/2018/11/29/21/51/social-media-3846597_1280.png')">
+  <form action="/login" method="post">
+    <div class="max-w-sm rounded-3xl bg-gradient-to-b from-sky-300 to-purple-500 p-px dark:from-blue-800 dark:to-transparent">
+      <div class="rounded-[calc(1.5rem-1px)] bg-white px-10 p-12 dark:bg-blue-900">
+        <a href="/">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="h-8 w-8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </a>
+        <div>
+          <h1 class="text-xl font-semibold text-white-800 dark:text-white">Sign in to your account</h1>
+        </div>
+
+        <% if (message) { %>
+        <p class="text-red-500"><%= message %></p>
+        <% } %>
+
+        <div class="mt-8 space-y-8">
+          <div class="space-y-6">
+            <input placeholder="Your Email" type="email" name="email" id="email" class="w-full bg-transparent text-gray-600 dark:text-white dark:border-white-700 rounded-md border border-white-300 px-3 py-2 text-sm placeholder-gray-600 invalid:border-red-500 dark:placeholder-gray-300" />
+            <input placeholder="Your Password" type="password" name="password" id="password" class="w-full bg-transparent text-gray-600 dark:text-white dark:border-white-700 rounded-md border border-white-300 px-3 py-2 text-sm placeholder-gray-600 invalid:border-red-500 dark:placeholder-gray-300" />
+          </div>
+
+          <button type="submit" class="h-9 px-3 w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus:bg-blue-700 transition duration-500 rounded-md text-white">
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
