@@ -4,7 +4,7 @@ const AuthMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.use(AuthMiddleware.isAuthenticated);
+router.use(AuthMiddleware.isLoggedIn);
 router.use(AuthMiddleware.isRoleMember);
 
 router.get('/:id', UserController.renderUser);

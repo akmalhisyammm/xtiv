@@ -4,13 +4,13 @@ const AuthMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.get('/', AuthMiddleware.isUnauthenticated, AuthController.renderHome);
+router.get('/', AuthMiddleware.isLoggedOut, AuthController.renderHome);
 
-router.get('/register', AuthMiddleware.isUnauthenticated, AuthController.renderRegister);
-router.post('/register', AuthMiddleware.isUnauthenticated, AuthController.handleRegister);
+router.get('/register', AuthMiddleware.isLoggedOut, AuthController.renderRegister);
+router.post('/register', AuthMiddleware.isLoggedOut, AuthController.handleRegister);
 
-router.get('/login', AuthMiddleware.isUnauthenticated, AuthController.renderLogin);
-router.post('/login', AuthMiddleware.isUnauthenticated, AuthController.handleLogin);
+router.get('/login', AuthMiddleware.isLoggedOut, AuthController.renderLogin);
+router.post('/login', AuthMiddleware.isLoggedOut, AuthController.handleLogin);
 
 router.get('/logout', AuthController.handleLogout);
 

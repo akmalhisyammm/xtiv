@@ -1,4 +1,4 @@
-const { Post, PostTag, Profile, Tag, User } = require('../models');
+const { Post, PostTag, Tag } = require('../models');
 
 class PostController {
   static async renderPosts(req, res) {
@@ -56,11 +56,11 @@ class PostController {
       const { title, content, imgUrl, TagId } = req.body;
 
       const post = await Post.update(
-        { title, content, imgUrl, UserId: req.session.user.id }, 
-        { 
+        { title, content, imgUrl, UserId: req.session.user.id },
+        {
           where: {
-            id: req.params.id
-          } 
+            id: req.params.id,
+          },
         }
       );
 

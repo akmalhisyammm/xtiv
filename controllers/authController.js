@@ -4,8 +4,7 @@ const { Profile, User, sequelize } = require('../models');
 class AuthController {
   static async renderHome(req, res) {
     try {
-      // res.render('pages/auth', { user: req.session.user });
-      res.render('pages/renderHome', { user: req.session.user });
+      res.render('pages/auth', { user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -16,8 +15,7 @@ class AuthController {
     try {
       const messages = req.query.message?.split(',') || [];
 
-      // res.render('pages/auth/register', { messages, user: req.session.user });
-      res.render('pages/renderRegister', { messages, user: req.session.user });
+      res.render('pages/auth/register', { messages, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -28,8 +26,7 @@ class AuthController {
     try {
       const message = req.query.message || '';
 
-      // res.render('pages/auth/login', { message, user: req.session.user });
-      res.render('pages/renderLogin', { message, user: req.session.user });
+      res.render('pages/auth/login', { message, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -38,29 +35,45 @@ class AuthController {
 
   static async handleRegister(req, res) {
     try {
-      const { firstName, lastName, gender, dateOfBirth, phone, address, username, email, password } = req.body;
-      
+      const {
+        firstName,
+        lastName,
+        gender,
+        dateOfBirth,
+        phone,
+        address,
+        username,
+        email,
+        password,
+      } = req.body;
+
       await sequelize.transaction(async (t) => {
         const user = await User.create({ username, email, password }, { transaction: t });
 
-        await Profile.create({
-          firstName,
-          lastName,
-          gender,
-          dateOfBirth,
-          phone,
-          address,
-          UserId: user.id,
-        }, {
-          transaction: t,
-        });
+        await Profile.create(
+          {
+            firstName,
+            lastName,
+            gender,
+            dateOfBirth,
+            phone,
+            address,
+            UserId: user.id,
+          },
+          {
+            transaction: t,
+          }
+        );
       });
 
       res.redirect('/login');
     } catch (error) {
       console.log(error);
 
-      if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+      if (
+        error.name === 'SequelizeValidationError' ||
+        error.name === 'SequelizeUniqueConstraintError'
+      ) {
         const message = error.errors.map((err) => err.message).join();
         return res.redirect(`/register?message=${message}`);
       }
@@ -75,7 +88,7 @@ class AuthController {
 
       const user = await User.findOne({ where: { email } });
       const errorMessage = 'Invalid email or password';
-      
+
       if (!user) {
         return res.redirect(`/login?message=${errorMessage}`);
       }

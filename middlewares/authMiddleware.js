@@ -1,5 +1,5 @@
 class AuthMiddleware {
-  static isAuthenticated(req, res, next) {
+  static isLoggedIn(req, res, next) {
     if (!req.session.user) {
       return res.redirect('/');
     }
@@ -7,7 +7,7 @@ class AuthMiddleware {
     next();
   }
 
-  static isUnauthenticated(req, res, next) {
+  static isLoggedOut(req, res, next) {
     if (req.session.user?.role === 'admin') {
       return res.redirect('/dashboard');
     }
@@ -23,7 +23,7 @@ class AuthMiddleware {
     if (req.session.user?.role === 'member') {
       return res.redirect('/posts');
     }
-  
+
     next();
   }
 
@@ -31,10 +31,9 @@ class AuthMiddleware {
     if (req.session.user?.role === 'admin') {
       return res.redirect('/dashboard');
     }
-  
+
     next();
   }
 }
-
 
 module.exports = AuthMiddleware;

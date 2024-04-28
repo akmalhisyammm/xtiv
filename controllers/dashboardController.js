@@ -1,5 +1,5 @@
 const { col, fn } = require('sequelize');
-const { Post, Profile, Tag, User } = require('../models');
+const { Post, PostTag, Profile, Tag, User } = require('../models');
 
 class DashboardController {
   static async renderDashboard(req, res) {
@@ -9,7 +9,7 @@ class DashboardController {
         group: 'gender',
       });
 
-      res.render('dashboard/renderDashboard', { genderReports, user: req.session.user });
+      res.render('pages/dashboard', { genderReports, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -20,7 +20,7 @@ class DashboardController {
     try {
       const users = await User.findAll();
 
-      res.render('dashboard/renderUsers', { users, user: req.session.user })
+      res.render('pages/dashboard/users', { users, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -31,7 +31,7 @@ class DashboardController {
     try {
       const posts = await Post.findAll();
 
-      res.render('dashboard/renderPosts', { posts, user: req.session.user });
+      res.render('pages/dashboard/posts', { posts, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -42,7 +42,7 @@ class DashboardController {
     try {
       const tags = await Tag.findAll();
 
-      res.render('dashboard/renderTags', { tags, user: req.session.user })
+      res.render('pages/dashboard/tags', { tags, user: req.session.user });
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -51,7 +51,7 @@ class DashboardController {
 
   static async renderCreateTag(req, res) {
     try {
-      res.render('dashboard/renderCreateTag')
+      res.render('pages/dashboard/tags/create');
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -60,7 +60,7 @@ class DashboardController {
 
   static async renderUpdateTag(req, res) {
     try {
-      res.send('renderUpdateTag');
+      res.send('pages/dashboard/tags/update');
     } catch (error) {
       console.log(error);
       res.send(error.message);
@@ -107,7 +107,8 @@ class DashboardController {
 
   static async handleDeleteTag(req, res) {
     try {
-      await Tag.destroy({ where: { id: req.params.id } });
+      await PostTag.destroy({ where: { TagId: +req.params.id } });
+      await Tag.destroy({ where: { id: +req.params.id } });
 
       res.redirect('/dashboard/tags');
     } catch (error) {
